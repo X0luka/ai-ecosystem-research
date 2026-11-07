@@ -1,0 +1,4 @@
+interface:
+  display_name: "AI 生态研究"
+  short_description: "以可追溯证据研究全球 AI 技术与产品，形成周报、月报和专题并持续验证判断"
+  default_prompt: "使用 $ai-ecosystem-research 生成截至今天的 AI 生态周报，先发现事实，再用金字塔结构写作，保存证据与后续验证记录。"

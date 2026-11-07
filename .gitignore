@@ -1,0 +1,15 @@
+.validation-deps/
+__pycache__/
+*.pyc
+
+# Local research history and one-off maintenance scripts are not distributed.
+/research/
+/tools/
+/签收说明.md
+/output/
+.env
+.env.*
+!.env.example
+node_modules/
+.DS_Store
+Thumbs.db
