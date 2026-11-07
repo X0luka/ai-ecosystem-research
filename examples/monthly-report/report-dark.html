@@ -1,0 +1,648 @@
+<!doctype html><html lang="zh-CN" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AI 全球技术与产品生态观察｜月报完整示例</title><style>
+.project{margin:22px 0;padding:20px 0;border-bottom:1px solid #e2e8eb}.project h4{border:0;margin:0 0 10px;padding:0;font-size:21px}.project p{margin:8px 0;line-height:1.8}.project p:last-child{color:#425865}.followups{border:1px solid #dce4e8;background:#f7f9fa;padding:14px 20px;margin:24px 0 40px;border-radius:6px}.followups summary{cursor:pointer;font-weight:600;font-size:17px}.followups[open] summary{margin-bottom:18px}.followups li{line-height:1.8;margin:16px 0}
+:root{color-scheme:light;--ink:#182a38;--blue:#155d87;--gold:#895b16}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#f5f4ef;color:var(--ink);font-family:"Microsoft YaHei","PingFang SC",system-ui,sans-serif;font-size:18px;line-height:1.9}
+.mast{background:#132e40;color:#fff;padding:20px 32px;font-size:14px;letter-spacing:.12em}.layout{display:grid;grid-template-columns:260px minmax(0,1080px);max-width:1420px;margin:auto;gap:34px;padding:36px 28px}
+nav{position:sticky;top:24px;height:calc(100vh - 48px);overflow:auto;font-size:15px;line-height:1.6;padding:12px 12px 20px 0}nav strong{font-size:19px;display:block;margin-bottom:18px}nav a{display:block;padding:9px 10px;margin:4px 0;color:#284b61;border-radius:5px;text-decoration:none}nav a:hover{background:#e0e9ed}
+main{min-width:0;background:#fff;padding:48px 54px;border:1px solid #e0e3e3;box-shadow:0 5px 20px #122c4007}
+h1{font-size:42px;line-height:1.35;letter-spacing:-.02em;margin:0 0 28px;color:#123a54}h2{font-size:30px;line-height:1.45;margin:76px 0 28px;padding:22px 0 14px;border-top:4px solid #1d5a7a;color:#123a54;scroll-margin-top:20px}h3{font-size:23px;line-height:1.5;margin:44px 0 20px;padding-left:14px;border-left:4px solid #8b9faa;color:#21485f;scroll-margin-top:20px}h4{font-size:20px;line-height:1.5;margin:36px 0 14px;color:#152f42;border-bottom:1px solid #dfe7eb;padding-bottom:9px;scroll-margin-top:20px}
+p{margin:16px 0}strong{font-weight:700}a{color:#14618c;text-underline-offset:3px;overflow-wrap:anywhere}li{margin:12px 0}code{font-size:.87em;background:#eef2f4;padding:2px 5px;border-radius:4px;overflow-wrap:anywhere}.fact,.analysis,.watch{padding:15px 18px;border-radius:4px;line-height:1.85}.fact{background:#eff7fb;border-left:4px solid var(--blue)}.analysis{background:#fcf7ec;border-left:4px solid var(--gold)}.watch{background:#f0f5f0;border-left:4px solid #57745e}
+.table-scroll{overflow-x:auto;margin:24px 0;border:1px solid #dbe2e7;border-radius:5px}table{border-collapse:collapse;width:100%;font-size:18px;line-height:1.7;min-width:680px}th{background:#e8f0f4;text-align:left;color:#123a54;font-weight:700}td,th{padding:14px 16px;vertical-align:top;border-bottom:1px solid #dbe2e7}tbody tr:nth-child(even){background:#fafbfc}td:first-child{min-width:115px}td{overflow-wrap:anywhere}blockquote{border-left:4px solid #8398a5;padding-left:20px;margin-left:0;color:#465d6c}
+.reading-tools{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 18px}.reading-tools button{font:inherit;font-size:15px;border:1px solid #b8c8d3;background:#fff;border-radius:5px;padding:7px 10px;color:#1c4963;cursor:pointer}.note{font-size:14px;color:#647781}.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:15px;border-bottom:1px solid #dce4e8;padding-bottom:20px;margin-bottom:28px}.legend span:nth-child(1){color:var(--blue)}.legend span:nth-child(2){color:var(--gold)}
+@media(max-width:1000px){.layout{grid-template-columns:1fr;padding:20px;gap:16px}nav{position:static;height:auto;max-height:290px;padding:12px;border:1px solid #d6e0e6}nav a{display:inline-block;margin-right:7px}main{padding:32px}h1{font-size:36px}}
+@media(max-width:600px){.layout{padding:12px}main{padding:24px 20px}h1{font-size:34px}h2{font-size:29px;margin-top:54px}h3{font-size:23px}body{font-size:18px}.mast{padding:16px 22px}.fact,.analysis,.watch{padding:13px}}
+@media print{body{background:#fff}nav,.mast,.reading-tools{display:none}.layout{display:block;padding:0;max-width:none}main{border:0;padding:0;box-shadow:none}h2{break-before:page}h2,h3,h4{break-after:avoid}.table-scroll{overflow:visible}table{min-width:0;font-size:11pt}body{font-size:12pt}.fact,.analysis,.watch{break-inside:avoid}a{color:inherit}h1{font-size:28pt}}
+/* Comparison layout: preserve semantic columns and strong section hierarchy. */
+.layout{grid-template-columns:220px minmax(0,1520px);max-width:1820px;gap:24px;padding:28px 22px}main{padding:40px 34px}h2{font-size:32px;border-top-width:5px}h3{font-size:24px;padding:14px 18px;background:#edf3f7;border-left:5px solid #245e7d}h4{font-size:22px;margin:34px 0 18px;border-bottom:2px solid #9fb2bf}
+.table-hint{font-size:14px;color:#566d7b;margin-bottom:8px}.comparison{max-height:80vh;isolation:isolate}.comparison table{min-width:1240px;table-layout:fixed;border-collapse:separate;border-spacing:0}.comparison th:first-child{width:150px}.comparison th:nth-child(2){width:270px}.comparison th:nth-child(3){width:270px}.comparison th:nth-child(4){width:280px}.comparison th:nth-child(5){width:270px}.comparison th{position:sticky;top:0;z-index:2;background:#e9f1f7;border-bottom:2px solid #7895a8;font-size:18px}.comparison th:nth-child(3),.comparison th:nth-child(4){background:#f4eedf}.comparison th:nth-child(5){background:#e9f0e9}.comparison td:first-child{position:sticky;left:0;background:#f3f6f8;border-right:1px solid #ccd7de;z-index:1;font-size:16px;color:#516875}.comparison td:first-child strong{font-size:19px;color:#143b54}.comparison th:first-child{left:0;z-index:3}.comparison td{padding:18px;line-height:1.8}.comparison td a{font-size:15px}.comparison tbody tr:hover td{background:#f5f8fa}
+@media(max-width:1000px){.layout{grid-template-columns:1fr;padding:18px}main{padding:30px 22px}}@media(max-width:600px){.layout{padding:10px}main{padding:24px 14px}h2{font-size:29px}h3{font-size:23px}.comparison{max-height:75vh}}
+
+.discovery{max-height:82vh}.discovery table{min-width:1260px;border-collapse:separate;border-spacing:0}.discovery th{position:sticky;top:0;z-index:2}.discovery th:first-child{width:65px}.discovery th:nth-child(2){min-width:160px}.discovery th:nth-last-child(2),.discovery th:last-child{width:32%}.discovery td:nth-child(2){min-width:160px;font-weight:600}.discovery td{padding:18px;line-height:1.85}.discovery td:first-child{min-width:60px}.discovery th:nth-last-child(2){background:#e9f1f7}.discovery th:last-child{background:#f4eedf}
+html[data-theme="dark"]{color-scheme:dark;--ink:#e5e5e5;--blue:#b8b8b8;--gold:#c6c6c6}
+html[data-theme="dark"] body{background:#181818;color:#e5e5e5}
+html[data-theme="dark"] main{background:#212121;border-color:#424242;box-shadow:none}
+html[data-theme="dark"] .mast{background:#161616;color:#cfcfcf}
+html[data-theme="dark"] h1,html[data-theme="dark"] h2{color:#efefef;border-color:#9f9f9f}
+html[data-theme="dark"] h3{color:#e8e8e8;background:#333333;border-color:#b0b0b0}
+html[data-theme="dark"] h4{color:#e8e8e8;border-color:#737373}
+html[data-theme="dark"] nav a{color:#d1d1d1}html[data-theme="dark"] nav a:hover{background:#383838}
+html[data-theme="dark"] a{color:#c3c3c3}html[data-theme="dark"] .note,html[data-theme="dark"] .table-hint{color:#bdbdbd}
+html[data-theme="dark"] .reading-tools button{background:#313131;color:#e8e8e8;border-color:#7e7e7e}
+html[data-theme="dark"] code{background:#383838;color:#eaeaea}
+html[data-theme="dark"] .table-scroll{border-color:#505050}
+html[data-theme="dark"] th{background:#393939;color:#eeeeee;border-color:#626262}
+html[data-theme="dark"] .discovery th:nth-last-child(2){background:#393939;color:#eeeeee}
+.discovery th:first-child{width:100px;min-width:100px;white-space:nowrap;padding:14px 12px}
+.discovery td:nth-child(3),.discovery table:has(th:nth-child(6)) td:nth-child(4){white-space:nowrap;min-width:85px}
+html[data-theme="dark"] td{background:#212121;color:#e5e5e5;border-color:#494949}
+html[data-theme="dark"] tbody tr:nth-child(even) td{background:#282828}
+html[data-theme="dark"] .comparison th:nth-child(3),html[data-theme="dark"] .comparison th:nth-child(4),html[data-theme="dark"] .discovery th:last-child{background:#353535;color:#e4e4e4}
+html[data-theme="dark"] .comparison th:nth-child(5){background:#383838;color:#e4e4e4}
+html[data-theme="dark"] .comparison td:first-child{background:#313131;color:#cccccc;border-color:#626262}
+html[data-theme="dark"] .comparison td:first-child strong{color:#eeeeee}
+html[data-theme="dark"] .comparison tbody tr:hover td{background:#3b3b3b}
+html[data-theme="dark"] blockquote{color:#cfcfcf;border-color:#848484}
+html[data-theme="dark"] .fact{background:#333333}html[data-theme="dark"] .analysis{background:#333333}html[data-theme="dark"] .watch{background:#363636}
+@media print{html[data-theme="dark"] body,html[data-theme="dark"] main,html[data-theme="dark"] td{background:white;color:#252525}.comparison,.discovery{max-height:none}}
+@media print{html[data-theme] h1,html[data-theme] h2,html[data-theme] h3,html[data-theme] h4,html[data-theme] th,html[data-theme] td,html[data-theme] td:first-child,html[data-theme] td:first-child strong,html[data-theme] a{color:#222!important;background:#fff!important}th,td:first-child{position:static!important}}</style></head><body><div class="mast">AI 全球技术与产品生态观察｜月报完整示例</div><div class="layout"><nav aria-label="报告目录"><strong>阅读目录</strong><div class="reading-tools"><button id="theme-toggle" aria-pressed="true" onclick="const d=document.documentElement;d.dataset.theme=d.dataset.theme==='dark'?'light':'dark';this.textContent=d.dataset.theme==='dark'?'切换浅色':'切换深色';this.setAttribute('aria-pressed',String(d.dataset.theme==='dark'))">切换浅色</button><button onclick="document.querySelector('main').style.fontSize='20px'">放大正文</button><button onclick="document.querySelector('main').style.fontSize='18px'">标准字号</button></div><a href="#section-2">执行摘要</a><a href="#section-4">01 全球 AI 产业格局</a><a href="#section-6">02 大厂战略与产品生态</a><a href="#section-9">03 创业公司与独立产品</a><a href="#section-10">04 开源生态与技术架构</a><a href="#section-12">05 技术社区热点</a><a href="#section-15">06 重点项目技术深度分析</a><a href="#section-19">07 论文与前沿研究</a><a href="#section-20">08 跨领域趋势归纳</a><a href="#section-21">09 预测、验证与持续追踪</a><a href="#section-24">资料边界与阅读说明</a><p class="note">项目按行、分析维度按列。比较表固定首列与表头，可横向滚动。</p></nav><main><h1 id="section-1">AI 全球技术与产品生态观察｜月报完整示例</h1>
+<blockquote>
+<p>公开脱敏示例：整理自一次实际研究产出，保留完整九章、原始统计窗口、来源与不确定性。它是历史报告，不代表当前最新生态；本次公开整理仅调整隐私信息与内部引用，未重新验证全部外部材料。</p>
+</blockquote>
+<p><strong>从“值得关注”到“值得投入”：交付有进展，收益仍须逐项验证</strong></p>
+<p>研究窗口：北京时间 2026 年 10 月 6 日 00:00—11 月 5 日 00:00，左闭右开，共 30 个完整日。资料复核：11 月 5 日。面向 AI 开发者与创业者。</p>
+<p>对照基线：11 月 4 日首期周报（本地历史基线，未随本示例公开）。周报只有一天历史，本月报不假装拥有一个月的连续追踪；月内纵向比较来自有日期的公告、版本和论文记录。今天访问的动态页面只证明今天可见的内容，不能倒填历史。报告覆盖九层框架，属于<strong>有限覆盖的月度复盘</strong>：可核验交付和版本变化，尚不能核验多数项目的持续采用与经营收益。</p>
+<h2 id="section-2">执行摘要</h2>
+<p><strong>本月最确定的进展是交付物和工程边界变得具体；最需要收紧的判断，是把这些供给进展直接解释为用户收益或产业胜出。</strong> 月报保留周报“重视可交付工作”的方向，但把投资与选型依据从功能数量、传播热度移到可复核的版本变化、失败处理和任务结果。</p>
+<p>本次对周报十五项重点项目全部进行了来源回访，检查了五条预测；五条均未到期，不计算命中率。真正的纵向证据包括 Mistral 的预览承诺到权重交付、Granite 的底座到适配器补丁、WeKnora 的版本变化，以及 vLLM 的部署依赖变化。项目回访不等于性能实测，更不等于十五项均已兑现。</p>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr>
+<th>本月结论</th>
+<th>相对周报的变化</th>
+<th>对开发／创业选择的影响</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>开放模型交付在推进，部署经济性仍需独立验证</td>
+<td>将“可考虑自部署”具体化为交付、许可、运行环境、任务成本四道门槛</td>
+<td>可以进入试用；不要仅因权重公开就承诺迁移或降本</td>
+</tr>
+<tr>
+<td>状态与恢复需要分层验收</td>
+<td>将周报合并讨论的状态计算、执行恢复和资源清理拆开</td>
+<td>分别测试错状态、重复副作用、孤儿资源；一种通过不能替代另一种</td>
+</tr>
+<tr>
+<td>权重编程的缺陷定位线索增加，通用优化结论不上调</td>
+<td>新补查的小网络论文扩展了任务范围，也暴露认证能力不足</td>
+<td>保留诊断研究价值，不作为替代常规训练的商业前提</td>
+</tr>
+<tr>
+<td>产品构建与产品价值仍相隔一层证据</td>
+<td>进一步区分模型标注一致性、意向转交和真实留存／成交</td>
+<td>优先验证实际工作结果，避免用传播量和演示完整度替代需求</td>
+</tr>
+</tbody></table></div>
+<h3 id="section-3">如何阅读本月报</h3>
+<p>第二、四章看月内版本和承诺的前后变化；第三、五章看热度如何与采用证据分离；第六、七章看技术主张被怎样支持或收窄；第八、九章看最终判断和后续投入条件。表格中“此前／本期”是证据，“判定／影响”是分析。文中“新增证据”指本次新增查阅，不必然是周报发布以后才出现。</p>
+<h2 id="section-4">01 全球 AI 产业格局</h2>
+<p><strong>维持“模型供给分层”的判断，但不把本月发布密度等同于产业价值已经转移。</strong> 开放权重、受控前沿模型和专用小模型服务不同约束；它们并非在同一条成本曲线上相互替代。</p>
+<h3 id="section-5">三条变化链，而不是三十天新闻汇总</h3>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr>
+<th>观察对象</th>
+<th>较早状态（事实）</th>
+<th>后续证据（事实）</th>
+<th>本月判定（分析）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Mistral Large 4：大型多模态模型</td>
+<td>10/6 提供 API 预览，并承诺月底发布权重</td>
+<td>后续开放权重公告及下载入口出现；与预览是不同交付阶段</td>
+<td>权重交付承诺可核实；独立部署的成本优势尚未随之成立</td>
+</tr>
+<tr>
+<td>Granite Switch：同一底座加载任务适配器</td>
+<td>10/15 发布 4.1，统一聊天、语音和决策入口</td>
+<td>10/29 的 4.1.1 更新语音与决策组件，官方称底座未重算</td>
+<td>模块化更新从架构描述走到补丁交付；生产回归成本仍待验证</td>
+</tr>
+<tr>
+<td>前沿模型准入</td>
+<td>Gemini 4 Argon 是此前一代能力与定价参照</td>
+<td>10/28 Carbon 公告强调先向部分防御者和可信伙伴开放</td>
+<td>“能力发布”和“自己的产品可调用”必须分开评估</td>
+</tr>
+</tbody></table></div>
+<p>来源：<a href="https://mistral.ai/news/mistral-large-4/">Mistral 预览</a>、<a href="https://mistral.ai/news/mistral-large-4-oss/">权重发布</a>、<a href="https://huggingface.co/blog/ibm-granite/granite-switch-4-1">Granite 4.1</a>、<a href="https://huggingface.co/blog/ibm-granite/granite-switch-4-1-1">4.1.1</a>、<a href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-carbon/">Carbon 公告</a>。这些是交付和发布主张的证据，不是本报告运行测试。</p>
+<p>基础设施侧，微软 10/12 把已投入生产的 Maia 200 与 2027 年起的扩容计划明确分开；Amazon 的第三季度材料披露自研芯片需求。它们支持“持续推理成为竞争重点”的解释，却不能用来计算整个行业的利润已经从模型转向算力。公司收入、订单承诺、芯片效率属于不同口径。<a href="https://blogs.microsoft.com/blog/2026/10/12/microsoft-to-expand-azure-maia-system-to-multi-gigawatt-deployments/">微软公告</a>；<a href="https://www.aboutamazon.com/news/company-news/amazon-custom-chips-demand-q3-2026-earnings">Amazon 芯片说明</a>。</p>
+<p><strong>判断修正：</strong> 周报从多个发布归纳出的结构性方向，仍应视为中等强度的机制解释。小团队更可执行的选择，是保留模型替换接口、维护真实任务集，并分别计量模型调用、基础设施和人工复核成本；现有公开证据不足以支持“一律转向本地”或“一律押注强模型”。</p>
+<h2 id="section-6">02 大厂战略与产品生态</h2>
+<p><strong>本月厂商比较应看交付条件变化，而不是发布数量。</strong> 前沿能力、机构准入、多模型平台和推理基础设施各自推进；一个厂商的科研计划不等于通用开发平台已经开放。</p>
+<h3 id="section-7">路线回访：兑现到哪一层</h3>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr>
+<th>厂商／用途</th>
+<th>月内或历史参照（事实）</th>
+<th>本次核验（事实）</th>
+<th>判定与选型含义（分析）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>OpenAI：通用模型与科研模型</td>
+<td>周报把 Terra 与 Rosalind 放入不同任务路线</td>
+<td>API 日志列 10/26 GPT-6.1 Terra、10/30 GPT-6 Rosalind；后者面向获批机构的内部科研</td>
+<td>维持任务分层；Rosalind 不能默认进入普通应用的产品承诺。<a href="https://developers.openai.com/api/docs/changelog">日志</a></td>
+</tr>
+<tr>
+<td>Anthropic：科研机构合作</td>
+<td>原先已有 AI for Science 项目</td>
+<td>10/28 公告列出扩展合作机构及项目</td>
+<td>可验证合作扩展，不能据此验证科研生产率或商业回报。<a href="https://www.anthropic.com/news/ai-for-science-expands-foundations-research-institutions">公告</a></td>
+</tr>
+<tr>
+<td>Google：受控前沿模型</td>
+<td>Carbon 在 Argon 后继续推进能力</td>
+<td>公告仍把广泛产品开放放在后续阶段</td>
+<td>维持准入风险提示；基于已可用模型做基线，不以受限模型演示替代验收。<a href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-carbon/">公告</a></td>
+</tr>
+<tr>
+<td>Microsoft：云推理体系</td>
+<td>Maia 200 与 Maia 300 是不同代际</td>
+<td>10/12 公告区分现有生产负载和后续部署计划</td>
+<td>收窄为“部分生产部署已有证据”，不把规划当已交付容量。<a href="https://blogs.microsoft.com/blog/2026/10/12/microsoft-to-expand-azure-maia-system-to-multi-gigawatt-deployments/">公告</a></td>
+</tr>
+<tr>
+<td>Meta：个人与专业 Agent</td>
+<td>周报已不再只按开放模型厂商理解 Meta</td>
+<td>10/12 Muse Wonder 发布强调 Active Memory 与 Active Focus</td>
+<td>产品路线判断维持；没有本次新增的长期使用证据，不能确认记忆改善留存。<a href="https://research.meta.ai/blog/muse-wonder">发布</a></td>
+</tr>
+<tr>
+<td>Amazon：芯片与云消费</td>
+<td>自研芯片需求和云增长是相关但不同指标</td>
+<td>财报相关说明同时讨论核心云负载与 AI 负载</td>
+<td>维持基础设施竞争解释；不将全部云增长归因为 AI。<a href="https://www.aboutamazon.com/news/company-news/aws-growth-ai-demand-q3-2026-earnings">说明</a></td>
+</tr>
+<tr>
+<td>阿里：应用与模型平台</td>
+<td>周报将百炼十月月报作为月度背景</td>
+<td>11/2 汇总涉及模型、应用模板、MCP 与路由；属于汇总材料</td>
+<td>可支持平台组合方向，不能把全部项目记为同日上线，也不能直接等同生产采用。<a href="https://developer.aliyun.com/article/1777815">月报</a></td>
+</tr>
+<tr>
+<td>字节：多模型入口</td>
+<td>方舟持续增加可选模型</td>
+<td>官方表列 10/20 DeepSeek Economy、10/24 Kimi K3.1 Pro；前者称同权重但服务速度取舍不同</td>
+<td>供应商选择不仅是选模型，还包括服务档位；任务质量相同的声明仍需自己的请求集验证。<a href="https://console.volcengine.com/ark/region:cn-beijing/docs/coding-plan-personal-model-release">记录</a></td>
+</tr>
+<tr>
+<td>腾讯：知识与执行工具</td>
+<td>WeKnora 0.8.3 已有检索、浏览器等能力</td>
+<td>0.9.0 加入人工介入提示持久化和更多操作边界，见第四章</td>
+<td>“从检索延伸到执行”有版本线索，不宜把所有能力都归为 0.9.0 首创</td>
+</tr>
+<tr>
+<td>百度：文档结构入口</td>
+<td>周报关注 Unlimited OCR 2 的长文档解析</td>
+<td>本次模型卡仍提供解析模型与论文入口</td>
+<td>交付存在可核实；没有真实文档集前后误差，暂不判定替代既有 OCR 管线。<a href="https://huggingface.co/baidu/Unlimited-OCR-2">模型卡</a></td>
+</tr>
+<tr>
+<td>DeepSeek：通用模型与检索工具</td>
+<td>9/10 Flash 发布可作窗外历史基线</td>
+<td>10/17 更新模型并开放 Search／Fetch；模型别名和定价称保持不变</td>
+<td>接口不变不代表行为不变；检索服务与可下载权重分开看。<a href="https://api-docs.deepseek.com/updates/">变更记录</a></td>
+</tr>
+<tr>
+<td>Mistral：可自部署前沿模型</td>
+<td>10/6 预览承诺月底权重交付</td>
+<td>月底权重公告使交付条件改变</td>
+<td>上调交付确定性；部署可行性与收益仍须按自己的环境验收</td>
+</tr>
+</tbody></table></div>
+<h3 id="section-8">数字比较的边界</h3>
+<p>Mistral 权重公告报告 Terminal-Bench 4.0 较预览提高 13 个百分点至 41%，由此反推预览对照为 28%，相对提高约 46.4%。这是<strong>同一厂商公告里的对照算术</strong>，不是本报告独立重跑；不能外推为开发者生产力提高 46.4%。DeepSeek 日志也提供前后模型评测，但框架、任务集和版本须一致才能比较，不能只摘较大的数字。<a href="https://mistral.ai/news/mistral-large-4-oss/">Mistral 对照</a>；<a href="https://api-docs.deepseek.com/updates/">DeepSeek 条件说明</a>。</p>
+<p>对创业者，平台的通用功能覆盖越完整，单纯增加一个聊天入口越难构成优势。本月证据更支持研究客户工作中的数据、权限、异常和验收环节；这仍是竞争分析，不是对任何垂直市场的需求证明。</p>
+<h2 id="section-9">03 创业公司与独立产品</h2>
+<p><strong>维持“工作完成比功能演示更重要”，并把采用证据的门槛提高到结果层。</strong> 周报解决“这些产品是什么”，本月报进一步核对它们已有材料究竟能证明什么。</p>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr>
+<th>产品及用途</th>
+<th>周报判断／基线</th>
+<th>本次回访证据（事实）</th>
+<th>本月判定与下一步（分析）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Vaani：语音接待、意向识别和人工转交</td>
+<td>流程清晰，有厂商客户案例</td>
+<td>案例披露 11,509 次来电、11,497 次完成对话、4,409 次意向转交、1,492 次回拨请求；收款仍由人工推进</td>
+<td>维持流程价值；转交率不是成交率。扩大试点前检查下游成交、退款、人工时间和相同口径对照。<a href="https://www.vaani.dev/case-studies/inbound-sales">案例</a></td>
+</tr>
+<tr>
+<td>SpeakON Agent：口述生成跨应用动作</td>
+<td>关注语音到待确认动作的交互</td>
+<td>产品页继续描述先准备、再审阅确认；套餐文字包含 Agent 优先 beta 访问</td>
+<td>维持交互参考价值；收窄可用性假设，不能写成所有用户已稳定获得全部能力。验证连接器权限、任务成功率和用户修订负担。<a href="https://www.speakon.app/pages/ai-agent">页面</a></td>
+</tr>
+<tr>
+<td>Overmind：生产轨迹到模型训练与评测</td>
+<td>关注线上失败转为改进材料的闭环</td>
+<td>当前平台页仍描述数据准备、评测、训练和部署</td>
+<td>架构方向可讨论，客户收益仍未知；没有公开成对任务结果，不判定它已经降低总成本。<a href="https://www.overmindlab.ai/">平台</a></td>
+</tr>
+<tr>
+<td>HackerTube：按 HN 推荐组织视频</td>
+<td>低构建成本值得关注，持续使用待查</td>
+<td>作者 10/31 说明仍是主要来源，提供数据导出；未获得可比月度留存</td>
+<td>继续跟踪，不判成功或失败；作者速度与传播优势不能外推为普通团队经营能力。<a href="https://karpathy.bearblog.dev/hacker-tube/">作者说明</a></td>
+</tr>
+<tr>
+<td>Hacker Books：从 HN 讨论发现书籍</td>
+<td>周报强调规则与实体匹配、小模型消歧</td>
+<td>About 页还说明推荐标签由 Sonnet 生成，与 Opus 在 400 条提及上有 85% 一致性</td>
+<td><strong>补充并收紧描述</strong>：排序语义也依赖模型标注；模型间一致性不是人工核验准确率。需要人工样本与分歧分析。<a href="https://hackerbooks.org/about">方法</a></td>
+</tr>
+</tbody></table></div>
+<p>以 Vaani 为例，按来电总数作分母，意向转交为 38.3%，转交加回拨为 51.3%，完成对话为 99.9%。三者对应不同环节，都不是最终支付结果。这些数值来自同一厂商案例，没有给出本月相对上月提升；不能据此生成增长曲线。</p>
+<p><strong>创业判断的修正</strong>是把“产品已有完整流程”与“值得持续投入”之间加上结果证据。对语音产品，结果是后续业务完成；对内容发现产品，是用户反复回来并找到有用内容；对训练平台，是同一任务质量下的总成本改善。本次没有取得私人后台数据，故不对这三类产品给出经营胜负排名。</p>
+<h2 id="section-10">04 开源生态与技术架构</h2>
+<p><strong>开源进展不能只按新增能力衡量，还要看升级是否改变正确性和运维边界。</strong> 本章以月内版本为基线，识别哪些值得迁移、哪些需要先测试。</p>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr>
+<th>工程对象</th>
+<th>较早版本／状态（事实）</th>
+<th>后续记录（事实）</th>
+<th>本月判断与迁移条件（分析）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>WeKnora：检索与知识工作平台</td>
+<td>10/14 v0.8.3 已列浏览器、模型管理和检索诊断相关变更</td>
+<td>10/29 v0.9.0 列出人工介入提示持久化、角色相关操作，以及不确定失败后避免重放 MCP 工具</td>
+<td>价值不限于“多了一个助手”；等待、权限和副作用边界变得可追踪。优先测试断线后的审批与重复调用，而非直接扩大自治权限。<a href="https://github.com/Tencent/WeKnora/releases/tag/v0.8.3">0.8.3</a>、<a href="https://github.com/Tencent/WeKnora/releases/tag/v0.9.0">0.9.0</a></td>
+</tr>
+<tr>
+<td>Granite Switch：模块化任务适配</td>
+<td>4.1 提供统一底座上的多任务入口</td>
+<td>4.1.1 官方称保持兼容、仅更新部分任务组件</td>
+<td>交付机制获支持；“兼容”不免除自己的回归集。检查适配器路由、校准和旧任务退化。<a href="https://huggingface.co/blog/ibm-granite/granite-switch-4-1-1">补丁说明</a></td>
+</tr>
+<tr>
+<td>vLLM：模型服务运行时</td>
+<td>10/18 v0.32.0 发布记录包含结构化决策端点及缓存变化</td>
+<td>当前发布列表中 11/2 的条目标题为 v0.33.0，但关联标签显示 v0.33.0rc3，说明还包括 CUDA 13.0 制品及依赖变化</td>
+<td>不凭标题判断稳定版本；锁定实际标签、镜像摘要和驱动要求。吞吐提升与部署兼容分开验收。<a href="https://github.com/vllm-project/vllm/releases/tag/v0.32.0">0.32.0</a>、<a href="https://github.com/vllm-project/vllm/releases">发布列表</a></td>
+</tr>
+<tr>
+<td>REA：专业逆向工具的 MCP／CLI 接口</td>
+<td>周报建议研究证据契约，不按异常热度采购</td>
+<td>当前契约区分规范化结果、原始输出、证据身份和取消／恢复</td>
+<td>维持接口设计价值；本次无版本化采用曲线，不宣称持续增长或替代专业底层工具。<a href="https://raw.githubusercontent.com/morluto/rea/main/docs/mcp-contracts.md">契约</a></td>
+</tr>
+</tbody></table></div>
+<h3 id="section-11">为什么这些变化会影响工程判断</h3>
+<p>如果一个工具调用超时，可能是“根本没执行”，也可能是“已经执行但结果没返回”。自动重试在前者有益，在后者可能造成重复副作用。WeKnora 的相关变更提供了具体回访入口，因此本月把“支持恢复”拆成<strong>可继续等待、能识别执行状态、不会重复执行</strong>三个问题。Release 和 PR 支持变更意图与纳入版本的事实；本报告没有在故障注入环境中运行验证。<a href="https://github.com/Tencent/WeKnora/pull/4250">人工介入持久化 PR</a>；<a href="https://github.com/Tencent/WeKnora/pull/4124">避免不确定失败重放 PR</a>。</p>
+<p>同样，服务框架升级不能只看新的模型名单。即使应用代码没有改变，驱动、CUDA、镜像和推理策略变化也会改变上线风险。本月更合适的行动是先建立固定镜像与回退路径，再比较吞吐、首 token 延迟、输出质量和错误率；不把官方某个硬件配置的速度提升写成自己的收益。</p>
+<h2 id="section-12">05 技术社区热点</h2>
+<p><strong>本月不重新排一套“更长的热榜”，而是检查周报发现的对象是否跨过了下一层证据。</strong> 热度用于发现，版本和复现用于验证，持续使用用于产品判断；三者没有可直接互换的单位。</p>
+<h3 id="section-13">七类入口的回访结果</h3>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr>
+<th>周报入口</th>
+<th>本月回访对象与证据</th>
+<th>能做出的判断</th>
+<th>不能做出的判断</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>GitHub</td>
+<td>WeKnora、REA、StateBench、AnyDecisionModel 的版本／源码／项目页</td>
+<td>哪些能力有公开实现，哪些只有文档说明</td>
+<td>没有完整首尾同口径快照，不能计算整月采用增长</td>
+</tr>
+<tr>
+<td>HF Models</td>
+<td>LFM3、Granite、Nemotron、权重补丁模型卡</td>
+<td>交付物是底座、适配器还是编辑检查点</td>
+<td>下载与点赞不等于真实生产部署，也不是独立复现次数</td>
+</tr>
+<tr>
+<td>HF Spaces</td>
+<td>回看周报中演示与共同基座的分类</td>
+<td>Demo 可以降低体验门槛</td>
+<td>多个 Demo 不是多个独立技术突破；本次未批量运行这些演示</td>
+</tr>
+<tr>
+<td>Hacker News</td>
+<td>HackerTube 作者材料、权重编程原文与后续研究</td>
+<td>讨论引出了哪些可核查问题</td>
+<td>评论热度不能证明留存或方法通用性</td>
+</tr>
+<tr>
+<td>独立产品</td>
+<td>Vaani、SpeakON、Overmind 等的结果口径与访问条件</td>
+<td>流程、交接点与供给状态</td>
+<td>不公开的付费、留存和成交数据不能补造</td>
+</tr>
+<tr>
+<td>论文</td>
+<td>原六篇研究加恢复与小网络审计材料</td>
+<td>作者实验支持到哪一步、是否已有后续版本</td>
+<td>一篇后续论文不自动等于对原大模型实验的独立复现</td>
+</tr>
+<tr>
+<td>跨社区项目</td>
+<td>对同一项目合并官网、仓库、模型卡与讨论</td>
+<td>降低重复计数，分清传播和验证</td>
+<td>三个平台转载一个主张不构成三份独立证据</td>
+</tr>
+</tbody></table></div>
+<p>来源入口与具体证据分别见第三、四、六、七章；原周报第五章为历史发现背景，未随本示例公开。</p>
+<h3 id="section-14">为什么没有“月增长冠军”</h3>
+<p>周报的 GitHub 平台周／月趋势本身不等于自定义 30 日净增量；HF 的趋势分与下载也可能采用不同窗口。即使今天再取得一个计数，两次本地采集仅相隔约一天，不能据此声称观察了一个月。当前最可靠的纵向比较来自版本和有日期的发布，不来自拼接两个不一致榜单。</p>
+<p><strong>筛选结论：</strong> 将“有具体交付链”的项目优先移入工程试用，将“只有热度或未公开采用数据”的项目留在观察。这里没有把降温认定为失败；缺失证据会保留在追踪记录，而不是从样本中删除。</p>
+<h2 id="section-15">06 重点项目技术深度分析</h2>
+<p><strong>本章复核周报的三个深析对象，不重写首次介绍。</strong> 重点是新增查阅材料是否改变可迁移范围、验证条件和建议。</p>
+<h3 id="section-16">6.1 权重编程：增加了小网络证据，没有跨过通用优化门槛</h3>
+<p>周报的最终判断已经是“更像特定缺陷修复，而非通用训练替代”。因此，本次不能把已在周报提及的 Qwen 补丁或 Gemma 失败案例再次包装成新发现。原实验日志仍支持这个谨慎判断：Gemma 对照中，不同工具预算的修改没有带来超过约一个百分点的数学收益。<a href="https://raw.githubusercontent.com/RikiyaT/lm_understand-logs/main/exp8_math/gemma_followup/README.md">实验日志</a>。</p>
+<p>本次补查到另一团队 11/3 提交的小网络审计研究：网络只有 433—4,801 个参数，任务使用合成请求和四条规则；作者报告在 18 个有缺陷网络中识别 16 个，但对健康网络和隐藏触发器的辨别并不稳定。该研究不能证明系统可以认证任意网络正确，更不是两个新 LLM 基座上的等预算优化实验。<a href="https://arxiv.org/abs/2611.05341">论文</a>；<a href="https://arxiv.org/html/2611.05341v1">实验限制</a>。</p>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr>
+<th>比较对象</th>
+<th>已有证据支持什么</th>
+<th>本次变化</th>
+<th>判定</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>原 Qwen 权重补丁</td>
+<td>具体检查点的效果与补丁可检查</td>
+<td>重新核对公开材料；未取得新的跨基座独立发现结果</td>
+<td>维持“具体补丁”证据，不上调通用性</td>
+</tr>
+<tr>
+<td>Gemma 后续实验</td>
+<td>不循环的模型未获得同等级增益</td>
+<td>负面结果仍然约束原主张</td>
+<td>继续要求与提示词、解码、微调等预算对照</td>
+</tr>
+<tr>
+<td>新查阅的小网络审计</td>
+<td>另一团队报告可定位部分人工植入缺陷</td>
+<td>扩展到另一类任务，同时暴露健康判定与触发器漏检</td>
+<td>上调“诊断研究值得跟踪”，不升级为生产认证或普遍优化能力</td>
+</tr>
+</tbody></table></div>
+<p><strong>决策变化：</strong> 如果做模型研发工具，可以设计“候选缺陷定位—确定性验证—可回退补丁”流程；如果做通用训练平台，不应把现有结果当作梯度训练替代。P03 保持未到期，原判断不撤销；补充范围说明进入本次历史记录。</p>
+<h3 id="section-17">6.2 StateBench：诊断工具成立，不能代替生产可靠性证明</h3>
+<p>StateBench 用受控状态更新任务区分检索与计算当前状态。周报已指出合成分数不能直接换算业务失败率。本次复核论文和仓库后，<strong>维持诊断用途，但收紧“验证与恢复”这个合并标签</strong>：StateBench 测状态计算，ReTrace 测错误后能否回到后续动作一致的状态，Sandman 管理沙箱的保活与清理。三者测的不是同一个对象。<a href="https://arxiv.org/abs/2611.03094">StateBench</a>、<a href="https://arxiv.org/abs/2610.27954">ReTrace</a>、<a href="https://arxiv.org/abs/2610.39711v2">Sandman</a>。</p>
+<p>对开发者，这意味着生产验收至少应拆为：读取当前业务状态是否正确；失败后是否恢复到正确流程位置；取消后资源与待执行动作是否被处理。一个系统可能清理沙箱很可靠，但仍误判订单状态；也可能状态计算正确，却在超时重试时重复执行操作。</p>
+<p>本次没有新增独立业务实验可将 StateBench 分数与真实完成率关联，因此“外置状态值得做”仍是工程建议，不冒充论文已经证明其业务收益。原预测 P02 需要新的组织、可运行测试与失败案例；本月窗口内已有论文不能倒填成预测创建后的兑现证据。</p>
+<h3 id="section-18">6.3 AnyDecisionModel：接口借鉴价值保留，正确率和校准收益仍未定</h3>
+<p>该 Swift 包把语言模型用于概率判断、选项选择和评分。周报静态分析了返回结构、允许答案概率质量和校准模块；本次回访项目与介绍页，没有取得满足 P01 条件的独立业务数据集、校准与成本成对结果。<a href="https://github.com/mattt/AnyDecisionModel">项目</a>、<a href="https://huggingface.co/blog/anydecisionmodel">介绍</a>。</p>
+<p>月度背景增加了一个重要比较：vLLM 0.32.0 的发布记录也有结构化决策端点。它说明类似能力正在不同层出现，但不能把两个实现存在当作两份业务收益证明。应用层封装、服务层端点和基础模型的任务能力应分别验收。<a href="https://github.com/vllm-project/vllm/releases/tag/v0.32.0">vLLM 0.32.0</a>。</p>
+<p><strong>判定维持：</strong> 可借鉴明确的输入输出契约；迁移前比较错误代价、拒绝阈值和校准，不能因格式合法就减少结果检查。P01 保持 open。当前不建议为统一接口而统一假设各后端概率语义相同。</p>
+<h2 id="section-19">07 论文与前沿研究</h2>
+<p><strong>本月更有价值的追问是“从论文到工程走了哪一步”，而不是再列六篇摘要。</strong> 本次核对原研究版本、公开实现入口及结论范围；未运行大模型、机器人或多 GPU 复现实验。</p>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr>
+<th>研究及用途</th>
+<th>周报基线</th>
+<th>本次核验与时间定位（事实）</th>
+<th>迁移判定（分析）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>StateBench：状态跟踪诊断</td>
+<td>11/2 论文，周报已有固定提交源码阅读</td>
+<td>本次论文页仍指向 v1；仓库可读</td>
+<td>保持诊断候选，不判真实任务收益已兑现。<a href="https://arxiv.org/abs/2611.03094">论文</a></td>
+</tr>
+<tr>
+<td>Wave Forcing：连续视频生成</td>
+<td>关注流式输出、并行执行与缓存</td>
+<td>10/31 论文描述生成、训练、运行时协同</td>
+<td>需要把模型副本与硬件账单纳入成本；不能把流水线吞吐视为单卡或首帧延迟改善。<a href="https://arxiv.org/abs/2611.00859">论文</a></td>
+</tr>
+<tr>
+<td>CUA-Master：电脑操作数据与训练</td>
+<td>关注双循环改进和快照回滚</td>
+<td>11/2 作者方法围绕数据构建与反馈采集</td>
+<td>从方法到小团队可复用方案仍需环境、教师与预算验证；本次未新增独立收益证据。<a href="https://arxiv.org/abs/2611.03126">论文</a></td>
+</tr>
+<tr>
+<td>Sandman：沙箱生命周期</td>
+<td>周报已读 10/31 v2</td>
+<td>10/29 v1、10/31 v2 有真实版本时间线；v2 仍写计划开放组件</td>
+<td>作者生产经历不等于外部可部署实现；将“可参考设计”与“可直接采用服务”分开。<a href="https://arxiv.org/abs/2610.39711v2">v2</a></td>
+</tr>
+<tr>
+<td>SWE-Trail：训练轨迹采集</td>
+<td>失败历史指导采集，非直接塞进 Agent 上下文</td>
+<td>11/1 论文说明历史作用于采集器，并保留测试时普通上下文</td>
+<td><strong>收窄类比</strong>：这不是对聊天记忆越多越好的证明，不能直接为跨会话记忆产品背书。<a href="https://arxiv.org/abs/2611.02074">论文</a></td>
+</tr>
+<tr>
+<td>uni-robot-agent：开放模型机器人接口</td>
+<td>周报主要引用 v1</td>
+<td>当前论文页有 11/3 v2，仍报告仿真与有限实物任务</td>
+<td>版本更新可确认；未逐行核定版本差异，不声称 v2 获得新性能提升，跨设备稳定性仍待查。<a href="https://arxiv.org/abs/2611.01560">版本记录</a></td>
+</tr>
+</tbody></table></div>
+<p>新增的小网络审计论文已在第六章用于修正权重编程的证据范围；ReTrace 用于区分恢复语义。两者是为验证既有判断补查，不是为增加论文数量。对早期研究，“没有足够长的跟踪时间”是一项真实限制；本月不据此判定它们停滞。</p>
+<h2 id="section-20">08 跨领域趋势归纳</h2>
+<p><strong>周报提出方向，本月将方向拆成可以被推翻的具体判断。</strong> 以下保留与周报一致的四条主线，但改变论证精度和行动条件。</p>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr>
+<th>周报原判断（准确释义）</th>
+<th>本次证据审查</th>
+<th>本月修订后的判断</th>
+<th>开发／创业影响</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>通用推理与专用执行形成分工</td>
+<td>开放权重交付、模块补丁和受限访问的事实并存；任务总收益不足</td>
+<td><strong>保留，限定到供给与工程组织层。</strong> 尚不能宣布小模型普遍更经济</td>
+<td>窄任务做同质量成本比较；保留强模型或人工回退</td>
+</tr>
+<tr>
+<td>工作过程成为可积累资产</td>
+<td>SWE-Trail 的历史在采集器侧；Overmind 描述训练闭环；这些与会话记忆机制不同</td>
+<td><strong>收窄。</strong> 数据只有经选择、验证并进入有效改进环节才构成资产；不能把存储记忆直接等同效果提升</td>
+<td>区分业务状态、检索记忆、训练轨迹三种数据，不混用权限和验收指标</td>
+</tr>
+<tr>
+<td>验证与恢复成为 Agent 能力</td>
+<td>WeKnora 版本变化、StateBench、ReTrace、Sandman 分别指向不同失效层</td>
+<td><strong>细化。</strong> 状态正确性、执行恢复和资源清理应分层验收</td>
+<td>将每层失败计入真实任务成本，避免“支持恢复”的单一复选框</td>
+</tr>
+<tr>
+<td>构建门槛降低，经营差异变重要</td>
+<td>作者案例和衍生内容产品可见；独立留存、收入未知；Hacker Books 排序还依赖模型标签</td>
+<td><strong>保留为假设，采用结论不升级。</strong> 更快搭建不证明更低维护成本或稳定需求</td>
+<td>在扩功能前验证重复使用、数据质量和分发渠道</td>
+</tr>
+</tbody></table></div>
+<p>这里的修正不是为了显得月报“必须有反转”。公开材料支持的地方维持；把不同机制混为一谈的地方拆开；没有后续证据的地方保留未定。尤其是第三条，论文和版本能支持存在具体机制，但尚不能支持这些机制已在整个行业成为采购标准。</p>
+<p>对小团队，优先级由此更明确：先建立真实任务与错误分类，再评估模型或框架替换；数据与接口都应可追溯；只有当改进能在同一任务集里减少失败、耗时或人工负担时，才扩大投入。这是有条件的研究建议，不替代读者的客户访谈和部署测量。</p>
+<h2 id="section-21">09 预测、验证与持续追踪</h2>
+<p><strong>本期五条预测均未到期，全部保持 open；不存在可计算的“本月命中率”。</strong> 原记录创建于 11/4；本次没有回改原句、期限或成立条件。历史发布可以验证此前供给演进，不能冒充预测以后发生的兑现。</p>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr>
+<th>原判断与期限</th>
+<th>本次查到什么</th>
+<th>当前判定</th>
+<th>下一次真正能改变判断的证据</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>P01 类型化决策接口值得进入应用评估；11/18</td>
+<td>包与接口材料可核查，未取得独立应用校准／成本成对结果</td>
+<td>未到期，维持探索建议，不升级收益结论</td>
+<td>真实标注任务集、校准曲线、错误代价与后端成本</td>
+</tr>
+<tr>
+<td>P02 Agent 工程竞争继续强化状态与恢复；12/4</td>
+<td>本月版本与研究支持关注方向，但大多早于预测登记</td>
+<td>未到期；本报告把状态、恢复和清理分层</td>
+<td>预测创建后至少两个不同维护组织发布可运行测试及明确失败案例</td>
+</tr>
+<tr>
+<td>P03 权重编程更像特定缺陷修复，通用优化证据不足；11/18</td>
+<td>小网络论文补充诊断证据，没有满足两种新 LLM 基座独立发现条件</td>
+<td>未到期，保留原判断，新增范围说明</td>
+<td>等预算、固定测试集、跨新基座且独立发现的效果</td>
+</tr>
+<tr>
+<td>P04 个人构建成果需要维护和使用验证；12/4</td>
+<td>HackerTube 与 Hacker Books 材料仍不足以证明持续产品价值</td>
+<td>未到期；不以沉默判失败，也不以在线判留存</td>
+<td>多日期使用反馈、持续维护记录和重复需求证据</td>
+</tr>
+<tr>
+<td>P05 专用小模型机会先出现在受约束任务；12/4</td>
+<td>LFM3 有模型与部署供给材料，Overmind 有产品流程；不足两个独立收益案例</td>
+<td>未到期，保留任务适配假设</td>
+<td>至少两个独立案例披露质量、硬件、延迟及总成本并优于原方案</td>
+</tr>
+</tbody></table></div>
+<h3 id="section-22">十五项重点项目的签收式回访</h3>
+<p>下表说明原周报重点清单没有被新热点替换掉。这里的“维持／收紧”是研究判断，不是产品评分；每项依据在前文或直接链接中。</p>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr>
+<th>周报重点项目</th>
+<th>本次回访结论</th>
+<th>后续行动</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Mistral Large 4</td>
+<td>预览到权重交付可核查，采用经济性未定</td>
+<td>进入条件明确的部署试用</td>
+</tr>
+<tr>
+<td>Gemini 4 Carbon</td>
+<td>受控准入边界维持</td>
+<td>等明确访问权限，不作为默认依赖</td>
+</tr>
+<tr>
+<td>LFM3</td>
+<td>小模型与多模态家族供给存在；硬件收益仍是厂商材料，非独立业务证据。<a href="https://www.liquid.ai/blog/lfm3">发布</a></td>
+<td>在目标设备与真实窄任务比较</td>
+</tr>
+<tr>
+<td>REA</td>
+<td>证据契约有参考价值；热度与采用仍分开</td>
+<td>固定版本检查工具结果及失败语义</td>
+</tr>
+<tr>
+<td>Weight-Space Programming</td>
+<td>扩展诊断线索，通用优化判断不升级</td>
+<td>跟踪独立发现过程与合理基线</td>
+</tr>
+<tr>
+<td>AnyDecisionModel</td>
+<td>接口价值维持，概率校准收益未定</td>
+<td>小数据集验证再迁移</td>
+</tr>
+<tr>
+<td>StateBench</td>
+<td>诊断价值维持，不替代业务回归</td>
+<td>和真实状态错误配对分析</td>
+</tr>
+<tr>
+<td>WeKnora</td>
+<td>月内版本链支持状态与副作用治理方向</td>
+<td>验证断线、审批恢复与调用去重</td>
+</tr>
+<tr>
+<td>Nemotron Transcribe</td>
+<td>10/28 说明支持可提示、可适配的转录方向；本次无独立客户前后结果。<a href="https://huggingface.co/blog/nvidia/nemotron-transcribe-granary">说明</a></td>
+<td>在行业语音、术语和实时约束下测量</td>
+</tr>
+<tr>
+<td>Granite Switch</td>
+<td>模块补丁交付可核查，兼容收益仍需回归</td>
+<td>对照旧任务与新适配器</td>
+</tr>
+<tr>
+<td>Vaani</td>
+<td>工作漏斗可解释；转交不能当成交</td>
+<td>获取下游业务结果与人工成本</td>
+</tr>
+<tr>
+<td>SpeakON Agent</td>
+<td>审阅交互维持；beta 与服务可用性需区分</td>
+<td>先核访问，再测跨应用任务</td>
+</tr>
+<tr>
+<td>Overmind</td>
+<td>改进闭环存在产品描述，客户收益未知</td>
+<td>用同一业务集做基线比较</td>
+</tr>
+<tr>
+<td>HackerTube</td>
+<td>构建案例保留，经营结论未升级</td>
+<td>回访持续维护与重复使用</td>
+</tr>
+<tr>
+<td>CUA-Master</td>
+<td>数据与回滚方法维持研究价值，迁移成本未知</td>
+<td>核实环境与采集预算可复用性</td>
+</tr>
+</tbody></table></div>
+<h3 id="section-23">与周报的最终对照</h3>
+<div class="table-scroll" tabindex="0"><table>
+<thead>
+<tr>
+<th>检查项</th>
+<th>原周报</th>
+<th>本月报的实际差异</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>主要任务</td>
+<td>发现项目、解释功能与初期价值</td>
+<td>回访同一批项目，比较交付、版本和证据强度</td>
+</tr>
+<tr>
+<td>技术重点</td>
+<td>三个项目的首次七问深析</td>
+<td>复核原主张，补查小网络审计，拆分状态／恢复语义</td>
+</tr>
+<tr>
+<td>数据作用</td>
+<td>平台热榜与初期评测</td>
+<td>历史版本对照、可比性审查；拒绝伪造月增长</td>
+</tr>
+<tr>
+<td>研究产出</td>
+<td>建立候选与预测</td>
+<td>明确维持、收紧、补充与未定，保留原预测期限</td>
+</tr>
+<tr>
+<td>对读者的用途</td>
+<td>知道有哪些值得看</td>
+<td>知道哪些可以试用、哪些尚不能作为投入前提</td>
+</tr>
+</tbody></table></div>
+<h2 id="section-24">资料边界与阅读说明</h2>
+<p>本月报没有连续三十天的本地观察序列，所以纵向证据优先使用有日期的历史公告、发布标签和论文版本。本地判断基线是 11/4 周报，不把它伪装成十月初预测。资料在 11/5 回访，晚于窗口截止的动态页面只用于当前核验；时间无法确定的新内容不计算为月内新增。</p>
+<p>主要引用来自厂商、仓库、论文作者与产品自身；不同来源支持不同强度的结论。公开实验不等于本报告复现，模型间一致性不等于人工真值，发布日期不等于普通用户已能使用。私人商业数据、不可访问的精确提交历史和所需硬件实测无法在本次研究中取得。GitHub 两个提交历史入口访问失败后，已改查仓库、固定旧提交与版本化论文，但不据此声称已证明“没有代码更新”。</p>
+<p>本次完成的是完整九章的有限覆盖月度复盘，不是全球所有项目的穷尽尽调。月内版本链提供真实的前后比较；周报判断复核提供可追溯的收紧与维持；尚未到期或证据不足的结论继续开放。灰色主题、标题层级、事实／分析分列与首次读者所需的项目解释均作为本示例的阅读设计。</p>
+</main></div></body></html>

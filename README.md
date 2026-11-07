@@ -4,6 +4,28 @@
 
 **先观察事实，再判断热度，最后归纳趋势。** 不只汇总新闻，也不预先选定热点再寻找佐证。
 
+## 生成效果与完整示例
+
+下面是 skill 实际生成的月报，经脱敏后保留完整九章。截图来自同一份 HTML 阅读版，展示中性灰深色主题、目录和结论先行的摘要。
+
+[![灰色深色版：执行摘要与九章目录](examples/monthly-report/images/overview-dark.png)](examples/monthly-report/report.md)
+
+**[在线阅读完整月报（Markdown）](examples/monthly-report/report.md)** · **[获取灰色深色 HTML](examples/monthly-report/report-dark.html)**
+
+GitHub 的 HTML 文件页显示源码；在文件页点击 **Download raw file**，保存后用浏览器打开，即可使用目录、主题切换和宽表滚动。也可下载整个仓库后打开 `examples/monthly-report/report-dark.html`，无需安装依赖。
+
+这份示例如何体现月报与周报的区别：
+
+| 阅读位置 | 可以看到什么 |
+|---|---|
+| 第二、四章 | 对照较早版本、后续交付和变化对选型的影响 |
+| 第六、八章 | 复核技术主张，说明判断为何维持、收窄或细化 |
+| 第九章 | 回访原重点项目，保留预测期限与未定结论 |
+
+![纵向比较：历史版本、后续证据与采用条件分列](examples/monthly-report/images/comparison-dark.png)
+
+示例保留原研究窗口（2026-10-06 至 2026-11-05）和资料限制，**不是当前新闻或持续更新的数据看板**。公开整理移除了个人化信息及本地历史链接；未随附私人台账，也没有重新验证全部外部材料。项目名和结论只存在于示例中，不是 skill 预设。
+
 ## 能帮你做什么
 
 | 模式 | 主要回答 | 产出重点 |
@@ -134,4 +156,4 @@ node tests/renderer.test.cjs
 
 这是研究工作流与阅读工具，不是无人值守爬虫，也不自带订阅、定时任务或付费数据源。研究质量取决于宿主能力和可访问来源；没有历史快照、私人业务数据或实测条件时，必须保留不确定性。查看源码不等于运行验证，模型评测不等于真实业务收益。
 
-采用 [MIT License](LICENSE)。内置 Markdown 解析器 Marked 的原始许可保留在 [marked-LICENSE.md](skills/ai-ecosystem-research/scripts/vendor/marked-LICENSE.md)。本仓库不包含个人研究历史、屏幕截图或第三方网页采集档案。
+采用 [MIT License](LICENSE)。内置 Markdown 解析器 Marked 的原始许可保留在 [marked-LICENSE.md](skills/ai-ecosystem-research/scripts/vendor/marked-LICENSE.md)。仓库仅包含公开整理的报告示例和纯报告页面截图，不包含私人研究台账、聊天界面截图或第三方网页采集档案。外部来源内容仍归其各自权利人所有。
