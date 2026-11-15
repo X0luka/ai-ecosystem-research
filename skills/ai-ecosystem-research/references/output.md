@@ -23,3 +23,17 @@ node /path/to/ai-ecosystem-research/scripts/render-report.cjs --input /path/to/r
 格式检查不证明研究事实准确。验收分别记录研究内容、指标口径、模式适配与呈现结果。
 
 HTML 核验先确认实际面板地址与交付文件一致，避免检查旧报告或另一份排版文件。观察摘要、长单元格比较表和末章；检查目录跳转、引用、本地链接及锚点。在可用的窄面板与完整阅读宽度检查：宽表可横向滚动，不靠缩小正文或删去解释解决溢出。切换主题后恢复读者默认主题，保存代表性截图和所检查文件的路径／修订信息。状态过期或多个窗口存在时重新定位目标，不盲目重复点击；无法操作实际页面时限定核验范围。核验不依赖固定窗口 ID、坐标、文件名或某一工具。
+
+## 固定阅读入口
+
+每期完成报告、验收记录及 HTML 后运行：
+
+```sh
+python /path/to/ai-ecosystem-research/scripts/build-portal.py --research-dir /path/to/research
+```
+
+生成固定 `research/index.html`，包含最新周报、最新月报、历史报告和单独折叠的未验收版本。按研究窗口截止时间、修订/创建时间排序，不以文件修改时间把旧稿误当新稿。新报告仅在 acceptance.json 的 artifact_status=ready 且 delivery_ready=true 时进入最新入口；这只使用已有验收，不替代研究检查。
+
+扫描 runs/ 下的 report-dark.html，读取相邻 run.json。旧报告缺机器验收时，在私有 research/portal-legacy.json 按相对 HTML 路径登记 mode、date、window_start、window_end、title、delivered、label；先核查实际历史交付与限制，再登记。不能修改旧验收或自动将所有 HTML 认作合格。未通过的新验收优先于旧登记。
+
+通知中同时给出固定首页和本期报告的可点击绝对本地文件链接，不仅写“报告已完成”。本地链接不会自动成为 ChatGPT 网页云端页面；不得暗示跨设备可访问。首页采用相对链接，迁移需复制整个 research/。生成的首页、目录索引与旧报告登记均留在私有 research/，不随公开源码上传。无新报告时保留上次阅读入口，不伪造更新日期。
