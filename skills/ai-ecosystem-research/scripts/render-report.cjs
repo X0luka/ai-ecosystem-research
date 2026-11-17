@@ -23,7 +23,8 @@ marked.use({renderer:{html({text}){return /^<br\s*\/?\s*>$/i.test(text.trim()) ?
   }
  }
 }});
-let html=marked.parse(md,{gfm:true});
+// Reserved research markers remain in Markdown for checks, not in the reading copy.
+let html=marked.parse(md.replace(/<!--\s*\/?claim:[A-Za-z][A-Za-z0-9_-]*\s*-->/g,''),{gfm:true});
 let seq=0,toc=[];
 html=html.replace(/<h([1-4])>([\s\S]*?)<\/h\1>/g,(_,lev,title)=>{
  const id='section-'+(++seq); if(lev==='2')toc.push(`<a href="#${id}">${title}</a>`);

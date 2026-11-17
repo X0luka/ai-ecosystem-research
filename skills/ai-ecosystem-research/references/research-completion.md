@@ -34,6 +34,10 @@
 
 每条核心事实在 evidence.json 绑定具体 claim、URL、标题、归属、事件时间、查阅时间与 locator（章节/字段/代码路径）。建立 report-claims.json 将报告论点映射到 evidence_ids。记录 URL 可访问不等于证据支持结论。分析说明由哪些事实推出、有何竞争性解释。
 
+按 [采集与写作检查](acquisition-workflow.md) 在写作前登记主张并运行 `prewrite`。不能从成稿外链反向生成台账来替代实时采集记录。检查后的数据发生变化时重新检查。交付检查现已接入采集、候选与正文主张检查；缺少新记录的旧报告不能自动通过，也不能通过补造历史修复。
+
+语义复核逐节检查未标记文字和表格，确认所有关键事实与数字都有对应主张；检查程序不能识别全部未登记事实，也不能证明 `support_review` 的判断正确。
+
 ## 研究验收与发送是两道门
 
 保存 acceptance.json：mode、artifact_status（draft/ready）、requirements（id/status/evidence/reason）、unresolved（question/type/attempts/impact/blocking）、delivery_ready。证据记录与文件检查不能替代语义审查。

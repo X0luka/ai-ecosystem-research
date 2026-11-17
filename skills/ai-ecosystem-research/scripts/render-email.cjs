@@ -27,6 +27,6 @@ const styles = {
  pre:'white-space:pre-wrap;background-color:#303030;padding:16px;',
  blockquote:'border-left:3px solid #888888;margin:16px 0;padding-left:16px;color:#cccccc;'
 };
-let body = marked.parse(fs.readFileSync(input,'utf8'),{gfm:true});
+let body = marked.parse(fs.readFileSync(input,'utf8').replace(/<!--\s*\/?claim:[A-Za-z][A-Za-z0-9_-]*\s*-->/g,''),{gfm:true});
 for (const [tag,style] of Object.entries(styles)) body=body.replace(new RegExp(`<${tag}(?=[ >])`,'g'), `<${tag} style="${style}"`);
 fs.writeFileSync(output,`<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"></head><body style="margin:0;background-color:#212121;color:#e5e5e5;font-family:Arial,'Microsoft YaHei',sans-serif;font-size:18px;line-height:1.85;"><div style="background-color:#212121;color:#e5e5e5;padding:24px;max-width:1120px;margin:auto;"><p style="color:#cccccc;font-size:15px;">本邮件含完整报告和表格。若邮箱折叠长正文或手机显示宽表不便，请下载 report-dark.html 附件，用浏览器阅读。</p>${body}</div></body></html>`,'utf8');

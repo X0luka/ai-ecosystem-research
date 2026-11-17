@@ -1,5 +1,7 @@
 # 持续研究记录
 
+新任务使用 [采集与写作检查](acquisition-workflow.md) 中的记录工具。`research.sqlite3` 为本期唯一写入来源；`candidates.json`、`evidence.json`、`report-claims.json` 和 `captures.json` 是导出列表。`acquisition-log.jsonl` 导出操作历史；`prewrite.json` 保存写作前检查的数据指纹。下文的语义字段继续适用；采集ID、候选ID、主张ID与命令格式以该操作说明为准。不得另建不关联的榜单入选索引。旧目录保持原格式，不回填或覆盖。
+
 每期新任务目录：`research/runs/YYYY-MM-DD/<mode>-<topic-slug>/`（例如 weekly-global、monthly-global、deep-dive-memory）。同日同主题新运行追加 -02 等唯一后缀；排版修订保留原任务并记录修订。兼容既有日期目录，不迁移或覆盖历史。每期保存 run.json：run_id、mode、topic、timezone、window_start、window_end、cutoff、created_at、revision_at、language、audience、output_format。专题 window_start 可为 null；月报注明 calendar_month 或 rolling_30_days。每期目录建议包含 `report.md`、`evidence.json`、`candidates.json`、`coverage.md`、`acceptance.md`。需要榜单的任务另存 `rankings.md`；专题不强制创建空榜单。共享 `research/projects.json`、`research/predictions.json`；指标快照按日期单独保存。先阅读既有记录，追加本期状态，不抹掉历史。
 
 ## 证据

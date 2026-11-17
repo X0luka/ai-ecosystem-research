@@ -140,6 +140,19 @@ GitHub、Hugging Face、Hacker News、独立产品和论文分别看待，不合
 
 ## 修改偏好与参与贡献
 
+### 可追溯的采集与写作
+
+新任务使用标准库脚本 `skills/ai-ecosystem-research/scripts/research_flow.py`：先初始化本期记录，再即时保存获取结果、统一登记候选和具体主张，写作前运行 `prewrite`，写作后运行 `check`。HTTP采集自动记录开始、结束、失败和内容；宿主搜索或浏览器工具使用 `begin` / `finish` 记录实际调用。操作和JSON格式见 [采集与写作检查](skills/ai-ecosystem-research/references/acquisition-workflow.md)。
+
+数据库和原始内容留在私有 `research/` 中。旧报告不自动迁移。新版交付检查要求新记录，不能通过事后回填时间让旧报告通过。结构检查不代替事实与语义复核。
+
+相关验证：
+
+```sh
+python skills/ai-ecosystem-research/scripts/test_research_flow.py
+python skills/ai-ecosystem-research/scripts/test-delivery.py
+```
+
 当前请求可以覆盖默认语言、范围、格式和时区。长期偏好修改安装目录中的 [reader-profile.md](skills/ai-ecosystem-research/references/reader-profile.md)。修改仓库副本后，需要将更新同步到自己的安装目录。
 
 项目核心在 [SKILL.md](skills/ai-ecosystem-research/SKILL.md)，模式规则在 [report-templates.md](skills/ai-ecosystem-research/references/report-templates.md)，证据纪律在 [evidence-rules.md](skills/ai-ecosystem-research/references/evidence-rules.md)。欢迎通过 Issue 或 PR 提供可复现的问题与改进。

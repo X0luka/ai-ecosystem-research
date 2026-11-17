@@ -9,7 +9,7 @@ const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'ai-research-renderer-'));
 fs.cpSync(source, path.join(temp, 'moved skill'), {recursive: true});
 const renderer = path.join(temp, 'moved skill/scripts/render-report.cjs');
 const input = path.join(temp, 'report.md');
-const markdown = '# Demo\n\n## Comparison\n\n| Project | Fact | Analysis |\n|---|---|---|\n| A | version | review |\n\n<script>alert(1)</script>\n\n[unsafe](javascript:alert%281%29)\n\n[line](notes.md#detail)\n\nText<br>next';
+const markdown = '# Demo\n\n## Comparison\n\n| Project | Fact | Analysis |\n|---|---|---|\n| A | <!-- claim:C1 -->version<!-- /claim:C1 --> | review |\n\n<!-- claim:C2 -->\nDocumented paragraph.\n<!-- /claim:C2 -->\n\n<script>alert(1)</script>\n\n[unsafe](javascript:alert%281%29)\n\n[line](notes.md#detail)\n\nText<br>next';
 fs.writeFileSync(input, markdown);
 for (const theme of ['dark', 'light']) {
   const output = path.join(temp, 'output', theme + '.html');
@@ -18,12 +18,22 @@ for (const theme of ['dark', 'light']) {
   assert(html.includes('data-theme="' + theme + '"'));
   assert(html.includes('<title>Demo &lt;test&gt;</title>'));
   assert(html.includes('<table>'));
+  assert(html.includes('<td>version</td>'));
+  assert(html.includes('<p>Documented paragraph.</p>'));
+  assert(!html.includes('claim:C'));
   assert(html.includes('<br>'));
   assert(html.includes('href="../notes.md#detail"'));
   assert(!html.includes('<script>alert'));
   assert(!html.includes('href="javascript:'));
   assert.equal(fs.readFileSync(input, 'utf8'), markdown);
 }
+const email = path.join(temp, 'email.html');
+cp.execFileSync(process.execPath, [path.join(temp, 'moved skill/scripts/render-email.cjs'), input, email]);
+const emailHtml = fs.readFileSync(email, 'utf8');
+assert(emailHtml.includes('Documented paragraph.'));
+assert(emailHtml.includes('>version</td>'));
+assert(!emailHtml.includes('claim:C'));
+assert(!emailHtml.includes('<script>alert'));
 assert.notEqual(cp.spawnSync(process.execPath, [renderer, '--input', input, '--output', input]).status, 0);
 assert.notEqual(cp.spawnSync(process.execPath, [renderer, '--input', input, '--output', path.join(temp, 'bad.html'), '--theme', 'invalid']).status, 0);
 const code = fs.readFileSync(renderer, 'utf8');

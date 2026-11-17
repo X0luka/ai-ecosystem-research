@@ -1,9 +1,10 @@
 """Fail-closed structural gate; not a truth verifier."""
 import json,sys
 from pathlib import Path
+from research_flow import check_writing
 REQUIRED={'source_support','time_scope','reader_value','semantic_review','visual_review'}
 def check(run):
- errors=[]
+ errors=check_writing(run)
  def read(name):
   try:return json.loads((run/name).read_text(encoding='utf-8-sig'))
   except (OSError,ValueError):errors.append('Missing/invalid '+name)

@@ -1,21 +1,23 @@
 """Contract tests for the delivery gate, using disposable research fixtures."""
 import importlib.util,json,tempfile,unittest,copy
 from pathlib import Path
+from test_research_flow import seed
 spec=importlib.util.spec_from_file_location('gate',Path(__file__).with_name('check-delivery.py'))
 gate=importlib.util.module_from_spec(spec);spec.loader.exec_module(gate)
 
 class DeliveryTests(unittest.TestCase):
  def setUp(self):
   self.tmp=tempfile.TemporaryDirectory();self.run=Path(self.tmp.name)
+  ledger=seed(self.run)
   self.a={'mode':'weekly','artifact_status':'ready','delivery_ready':True,'unresolved':[],
    'requirements':[{'id':i,'status':'pass','evidence':'review.md'} for i in gate.REQUIRED|{'nine_layers','rankings'}]}
-  self.e=[{'id':'E1','claim':'A documented behavior','url':'https://example.org/source','title':'Source','publisher':'Author','retrieved_at':'2000-01-01','evidence_type':'primary','locator':'Section 1'}]
-  self.c=[{'claim':'A documented behavior','evidence_ids':['E1']}]
-  for n in ['report.md','report-dark.html','coverage.md']:(self.run/n).write_text('fixture')
+  self.e=ledger.rows('evidence');self.c=ledger.rows('claims');ledger.close()
+  for n in ['report-dark.html','coverage.md']:(self.run/n).write_text('fixture')
  def tearDown(self):self.tmp.cleanup()
  def result(self):
   for n,x in [('acceptance.json',self.a),('evidence.json',self.e),('report-claims.json',self.c)]:
-   (self.run/n).write_text(json.dumps(x))
+   if n=='acceptance.json' or json.loads((self.run/n).read_text(encoding='utf-8')) != x:
+    (self.run/n).write_text(json.dumps(x),encoding='utf-8')
   return gate.check(self.run)
  def test_valid_weekly(self):self.assertEqual(self.result(),[])
  def test_draft_rejected(self):self.a['artifact_status']='draft';self.assertTrue(self.result())
