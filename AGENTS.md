@@ -11,6 +11,14 @@ Use GitHub Flow for shared repository changes.
 
 When the task includes installing a skill update, sync the validated files to the existing local installation and verify matching contents. Resolve the installation path locally.
 
+## Default development acceptance
+
+Before implementation, the implementing agent derives a task-specific contract from the user's outcome. In an ignored private task folder, write `plan.json` with the problem, observable success criteria, failure examples, test methods, expected evidence and limits of automation. Use the keys `problem`, `criteria`, `counterexamples`, `methods`, `evidence` and `limits`. Both criteria and methods map correctness, integration, effectiveness and regression to concrete checks. Run `python tests/quality_gate.py start FOLDER` from the repository root to freeze the contract.
+
+For each area run `python tests/quality_gate.py run FOLDER --area AREA --artifact PATH -- COMMAND ...`. Exercise normal entry points and inject at least one fault that must fail. For integration and effectiveness, inspect actual outputs and assert against independently observable conditions. Supply the artifacts checked by the command. A test count, successful process launch, screenshot alone or agent assertion is insufficient. Keep private evidence outside version control.
+
+After fixes rerun affected checks and verify the complete set using `python tests/quality_gate.py check FOLDER`. Changes to sources invalidate earlier receipts. Preserve the original failure condition. Mark blocked checks and unverified meaning explicitly. Include paths to real evidence and the acceptance limits in the review.
+
 ## Public and private boundaries
 
 - Publish reusable skill instructions, scripts, tests, documentation, and explicitly sanitized examples.
