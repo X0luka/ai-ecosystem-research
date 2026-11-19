@@ -8,7 +8,7 @@ import tempfile
 from contextlib import closing
 from datetime import datetime
 from pathlib import Path
-from urllib.parse import urlsplit
+from urllib.parse import parse_qs, urlsplit
 
 
 def defaults():
@@ -106,7 +106,7 @@ def audit(db, run_name):
                 state = 'failed'
             refs = {e['id'] for e in evidence if e['capture_id'] == c['id']}
             records[key]['attempts'].append(dict(capture=c['id'], started_at=c['started_at'], url=c.get('final_url') or c['url'],
-                parent=c.get('parent_id'), status=state, reason=reason, review=review,
+                parent=c.get('parent_id'), status=state, reason=reason, review=review, purpose=c['purpose'],
                 claims=[x['id'] for x in claims if x.get('active', True) and refs.intersection(x['evidence_ids'])]))
     for item in records.values():
         seen = {}
@@ -137,9 +137,44 @@ def export(run):
     return result
 
 
+def dashboard_shell(path, run_id):
+    """Use the complete dashboard layout with this run's own records."""
+    with closing(sqlite3.connect((path.parent / 'research.sqlite3').resolve().as_uri()+'?mode=ro', uri=True)) as db:
+        db.execute('BEGIN')
+        def records(table):
+            return [json.loads(row[0]) for row in db.execute('SELECT payload FROM '+table+' ORDER BY id')]
+        captures, candidates, evidence, claims = map(records, ('captures','candidates','evidence','claims'))
+    data = dict(rows=[], caps={}, cand={}, ev={})
+    for c in captures:
+        key = c['id']
+        url = c.get('final_url') or c['url']
+        host = urlsplit(url).hostname or ''
+        group = 2 if host in ('github.com','api.github.com','raw.githubusercontent.com') else 3 if host=='huggingface.co' else 4 if host=='arxiv.org' else 7
+        mode = 2 if c['status']=='failed' else 3 if c['status']=='started' else int(not is_search(c))
+        body = 'captures/'+key+'.bin'
+        data['caps'][key] = dict(reason=c['purpose'], parent=c.get('parent_id'),error=c.get('error'),
+                                 body=body if (path.parent/body).is_file() else None)
+        data['rows'].append(dict(cap=key,url=url,title=c['purpose'],g=group,mode=mode,
+                                 es=[e['id'] for e in evidence if e['capture_id']==key]))
+    for c in candidates:
+        data['cand'][c['id']] = dict(name=c['name'],decision=c['decision'],reason=c['reason'],
+                                     origin=c.get('discovery_capture_ids',[]),url=c['canonical_url'])
+    for e in evidence:
+        data['ev'][e['id']] = dict(title=e['title'],kind=e['evidence_type'],fact=e['claim'],
+                                   limit=e.get('limitations'),src=e['url'],
+                                   cs=[c['id'] for c in claims if c.get('active',True) and e['id'] in c['evidence_ids']])
+    links = [('trace.html','完整行为记录'),('report-dark.html','报告正文')]
+    footer = '　'.join('<a href="'+url+'">'+label+'</a>' for url,label in links if (path.parent/url).is_file())
+    template = Path(__file__).with_name('dashboard-template.html').read_text(encoding='utf-8')
+    return template.replace('__RUN__',html.escape(run_id)).replace('__FOOT__',footer).replace(
+        '__DATA__',json.dumps(data,ensure_ascii=False).replace('<',r'\u003c'))
+
+
 def update_dashboard(path, result):
     """Install or refresh a scoped view inside the existing private dashboard."""
-    original = path.read_text(encoding='utf-8')
+    original = path.read_text(encoding='utf-8') if path.exists() else ''
+    if not original or 'id="stats"' not in original or 'data-run-dashboard' in original:
+        original = dashboard_shell(path, result['run_id']).replace('<main>', '<main data-run-dashboard>')
     if 'id="tabs"' not in original or 'id="intro"' not in original:
         raise ValueError('Unsupported dashboard: expected existing review tabs')
     start, end = '<!-- discovery-audit:start -->', '<!-- discovery-audit:end -->'
@@ -161,6 +196,19 @@ def update_dashboard(path, result):
         lines.append('<p>历史数据无法核实。本期没有同期覆盖计划。</p>')
     for item in result['targets'].values():
         lines.append('<details class="row"><summary>'+safe(item['label'])+'　'+labels[item['status']]+'</summary>')
+        attempts = item['attempts']
+        state = item['status']
+        target = item['label'] if result['planned'] else '未知（无同期计划）'
+        actions = '；'.join(a['capture']+' · '+a.get('purpose','未知')+'　'+
+                          ' '.join(parse_qs(urlsplit(a['url']).query).get('q', [])) for a in attempts)
+        outcomes = '；'.join(a['capture']+' · '+(a['review'].get('impact') or a['reason']) for a in attempts)
+        gaps = {'unattempted':'计划内检查尚无请求','partial':'；'.join(a['reason'] for a in attempts if a['status']=='partial'),'failed':'请求失败，未完成核查',
+                'verified':'此项计划检查已完成','unknown':'未知'}
+        next_step = ('执行计划中的检查：'+target if state=='unattempted' else '未知（没有登记后续动作）')
+        fields = [('搜索目标',target),('执行了什么',actions or ('尚未执行' if state=='unattempted' else '未知')),
+                  ('得到的结果',outcomes or ('尚无结果' if state=='unattempted' else '未知')),
+                  ('尚未完成',gaps[state]),('下一步',next_step)]
+        lines.extend('<p><b>'+label+'</b>　'+safe(value)+'</p>' for label,value in fields)
         if not item['attempts']:
             lines.append('<p>'+('没有关联请求，需执行计划中的检查。' if item['status']=='unattempted'
                                else '缺少同期计划或关联记录，无法核实。')+'</p>')
@@ -197,8 +245,4 @@ if __name__ == '__main__':
     result = export(args.run)
     if args.dashboard:
         dashboard = args.run / 'research-dashboard.html'
-        if not dashboard.exists():
-            # New runs have no historical dashboard payload. Mount the same coverage view.
-            with dashboard.open('x', encoding='utf-8') as f:
-                f.write('<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>研究覆盖仪表盘</title><style>body{max-width:900px;margin:2rem auto;padding:0 1rem;background:#151819;color:#eee;font:16px/1.6 system-ui}section,details{padding:1rem;border:1px solid #566260;border-radius:10px;margin:.6rem 0}button,summary{cursor:pointer}a{color:#aadacc}p{overflow-wrap:anywhere}</style><h1>研究覆盖仪表盘</h1><div id="tabs"></div><div id="intro"></div></html>')
         update_dashboard(dashboard, result)
