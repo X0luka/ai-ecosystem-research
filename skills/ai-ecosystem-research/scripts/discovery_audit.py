@@ -130,10 +130,19 @@ def update_dashboard(path, result):
     labels = dict(unknown='未知', unattempted='未尝试', failed='采集失败', partial='部分覆盖', verified='已核实')
     def safe(value):
         return html.escape(str(value))
-    lines = ['<section id="coverage-panel" hidden><h2>研究来源覆盖审计</h2>',
+    counts = {key: 0 for key in labels}
+    for target in result['targets'].values():
+        counts[target['status']] += 1
+    summary = '　·　'.join(label+' '+str(counts[key]) for key, label in labels.items())
+    note = ('历史数据无法核实。本期没有同期覆盖计划。' if not result['planned']
+            else '按本期覆盖计划统计。')
+    lines = ['<section id="coverage-home"><div class="line"><h2>渠道覆盖情况</h2>',
+             '<button type="button" class="linkbtn">查看渠道明细 →</button></div>',
+             '<p>'+safe(summary)+'</p><small>'+note+' 未关联目标的请求 '+str(len(result['unassigned']))+' 次。</small></section>',
+             '<section id="coverage-panel" hidden><h2>研究来源覆盖审计</h2>',
              '<p>运行 '+safe(result['run_id'])+' · 未关联目标的请求 '+str(len(result['unassigned']))+' 次。</p>']
     if not result['planned']:
-        lines.append('<p>本期没有同期覆盖计划。历史状态未知。</p>')
+        lines.append('<p>历史数据无法核实。本期没有同期覆盖计划。</p>')
     for item in result['targets'].values():
         lines.append('<details class="row"><summary>'+safe(item['label'])+'　'+labels[item['status']]+'</summary>')
         for a in item['attempts']:
