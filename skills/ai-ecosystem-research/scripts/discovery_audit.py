@@ -23,13 +23,29 @@ def make_plan(run):
     if not isinstance(targets, dict) or any(not isinstance(x, str) or not x.strip()
                                              for pair in targets.items() for x in pair):
         raise ValueError('coverage_targets must map channel IDs to descriptions')
-    return dict(targets=targets, run_id=meta.get('run_id', run.name),
+    routes = meta.get('coverage_routes', {})
+    if not isinstance(routes, dict) or not routes.keys() <= targets.keys():
+        raise ValueError('Routes must refer to declared targets')
+    for prefixes in routes.values():
+        if not isinstance(prefixes, list) or not all(isinstance(p, str) and urlsplit(p).scheme in ('http','https') and urlsplit(p).netloc and not urlsplit(p).query and not urlsplit(p).fragment for p in prefixes):
+            raise ValueError('Expected HTTP(S) origin/path prefixes')
+    return dict(targets=targets, routes=routes, run_id=meta.get('run_id', run.name),
                 window=[meta.get('window_start'), meta.get('window_end', meta.get('window_end_exclusive'))])
 
 
 def plan_for(db):
     if db.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='coverage_plan'").fetchone():
         return json.loads(db.execute('SELECT payload FROM coverage_plan').fetchone()[0])
+
+
+def routed_targets(plan, url):
+    actual = urlsplit(url)
+    def matches(prefix):
+        base = urlsplit(prefix)
+        path = base.path.rstrip('/')
+        return (actual.scheme == base.scheme and actual.netloc.lower() == base.netloc.lower()
+                and (actual.path.rstrip('/') == path or actual.path.startswith(path+'/')))
+    return [key for key, prefixes in (plan or {}).get('routes', {}).items() if any(matches(p) for p in prefixes)]
 
 
 def window(value):
@@ -145,12 +161,20 @@ def update_dashboard(path, result):
         lines.append('<p>历史数据无法核实。本期没有同期覆盖计划。</p>')
     for item in result['targets'].values():
         lines.append('<details class="row"><summary>'+safe(item['label'])+'　'+labels[item['status']]+'</summary>')
+        if not item['attempts']:
+            lines.append('<p>'+('没有关联请求，需执行计划中的检查。' if item['status']=='unattempted'
+                               else '缺少同期计划或关联记录，无法核实。')+'</p>')
+        elif item['status'] in ('failed', 'partial', 'unknown'):
+            lines.append('<p>需要补查：核对以下请求的失败或范围限制，再读取能回答本期问题的原始材料。</p>')
         for a in item['attempts']:
             review = a['review']
             fields = [a['capture'], a['url'], a['reason'], '前序请求 '+str(a['parent'] or '无'),
                       '替代对象 '+str(review.get('alternative_for') or '无'),
                       '结论影响 '+str(review.get('impact') or '未登记'), '关联主张 '+(', '.join(a['claims']) or '无')]
             lines.append('<p>'+safe(' · '.join(fields))+'</p>')
+            if a['status'] != 'failed':
+                lines.append('<a href="captures/'+safe(a['capture'])+'.bin">查看导出的采集响应</a>' if
+                             (path.parent/'captures'/(a['capture']+'.bin')).is_file() else '')
         lines.append('</details>')
     lines.append('</section>')
     script = Path(__file__).with_name('coverage-tab.js').read_text(encoding='utf-8')
@@ -172,4 +196,9 @@ if __name__ == '__main__':
     args = parser.parse_args()
     result = export(args.run)
     if args.dashboard:
-        update_dashboard(args.run / 'research-dashboard.html', result)
+        dashboard = args.run / 'research-dashboard.html'
+        if not dashboard.exists():
+            # New runs have no historical dashboard payload. Mount the same coverage view.
+            with dashboard.open('x', encoding='utf-8') as f:
+                f.write('<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>研究覆盖仪表盘</title><style>body{max-width:900px;margin:2rem auto;padding:0 1rem;background:#151819;color:#eee;font:16px/1.6 system-ui}section,details{padding:1rem;border:1px solid #566260;border-radius:10px;margin:.6rem 0}button,summary{cursor:pointer}a{color:#aadacc}p{overflow-wrap:anywhere}</style><h1>研究覆盖仪表盘</h1><div id="tabs"></div><div id="intro"></div></html>')
+        update_dashboard(dashboard, result)

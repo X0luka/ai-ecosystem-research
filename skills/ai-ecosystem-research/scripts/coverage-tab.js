@@ -1,7 +1,7 @@
 (() => {
   const tabs = document.querySelector('#tabs');
   const panel = document.querySelector('#coverage-panel');
-  const content = ['#intro', '.tools', '#list', '.pager'].map(selector => document.querySelector(selector));
+  const content = ['#intro', '.tools', '#list', '.pager'].map(selector => document.querySelector(selector)).filter(Boolean);
   tabs.after(panel);
   const home = document.querySelector('#coverage-home');
   const anchor = document.querySelector('#stats') || tabs;

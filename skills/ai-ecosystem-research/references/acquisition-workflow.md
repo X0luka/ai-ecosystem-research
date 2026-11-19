@@ -165,3 +165,5 @@ material 可取 original、snippet 或 incomplete。window 填来源实际覆盖
 export 和 prewrite 自动生成 discovery-audit.json。也可独立运行 python <skill>/scripts/discovery_audit.py <run> 重新计算。对本期已有的 research-dashboard.html 加 --dashboard 可刷新同一页面的覆盖审计标签。旧库只读审计，无计划显示未知。审计是诊断结果，不改变交付门槛。
 
 已确认与本次渠道检查无关的请求可显式填写 coverage_targets 为空数组。省略该字段表示尚未分类。
+
+新任务在 init 前为计划中的入口设置 run.json 的 coverage_routes，例如 {"papers":["https://arxiv.org/list/cs.AI"]}。键对应 coverage_targets。请求开始时按 URL 的主机和路径段匹配；显式目标优先。其他地址的补查可通过 parent_id 继承原请求的目标。通用搜索工具访问多个方向时，应在请求中显式给出实际目标。无法归类的请求保留未知。使用 discovery_audit.py RUN --dashboard 将本次结果和补查原因发布到本地仪表盘；新目录只挂载同一个覆盖组件。

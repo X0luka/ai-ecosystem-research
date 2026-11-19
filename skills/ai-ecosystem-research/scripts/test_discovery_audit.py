@@ -63,6 +63,28 @@ class AuditTests(unittest.TestCase):
         self.store.db.commit()
         self.assertEqual(self.channel()['status'], 'unknown')
 
+    def test_auto_route_failure_retry_and_unmatched(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            run = Path(tmp)
+            meta = dict(coverage_targets={'papers':'限定论文清单'}, coverage_routes={'papers':['https://example.org/list']},
+                        window_start=self.window[0], window_end=self.window[1])
+            (run/'run.json').write_text(json.dumps(meta), encoding='utf-8')
+            flow.initialize(run)
+            store = flow.Store(run)
+            self.addCleanup(store.close)
+            def begin(key, url, **extra):
+                return store.apply('begin', dict(id=key,tool='http',purpose='inspect',url=url,**extra))
+            self.assertEqual(begin('A','https://example.org/list?page=1')['coverage_targets'], ['papers'])
+            store.apply('finish', dict(id='A',status='failed',error='403'))
+            self.assertEqual(audit.export(run)['targets']['papers']['status'],'failed')
+            self.assertEqual(begin('B','https://other.example/list',parent_id='A')['coverage_targets'], ['papers'])
+            store.apply('finish', dict(id='B',status='ok'), b'entries')
+            store.apply('coverage-review',dict(id='B',target='papers',window=self.window,material='original',
+                        excerpt='entries',alternative_for='A',impact='limited to the scoped list',complete=True))
+            self.assertEqual(audit.export(run)['targets']['papers']['status'],'verified')
+            self.assertNotIn('coverage_targets', begin('C','https://example.org/listing'))
+            store.close()
+
     def test_explicit_non_discovery_and_unclassified_requests(self):
         self.begin('A', coverage_targets=[])
         self.assertEqual(self.channel()['status'], 'unattempted')

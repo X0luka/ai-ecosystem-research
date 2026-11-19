@@ -97,6 +97,11 @@ class Store:
             need(d, ['tool', 'purpose', 'url'])
             explicitly_scoped = 'coverage_targets' in d
             targets = d.get('coverage_targets', [])
+            if not explicitly_scoped:
+                targets = discovery_audit.routed_targets(discovery_audit.plan_for(self.db), d['url'])
+                if not targets and d.get('parent_id'):
+                    targets = self.get('captures', d['parent_id']).get('coverage_targets', [])
+                explicitly_scoped = bool(targets)
             if not isinstance(targets, list) or any(not isinstance(k, str) for k in targets):
                 raise ValueError('coverage_targets must be a list of channel IDs')
             if targets:
