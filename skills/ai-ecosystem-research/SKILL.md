@@ -66,3 +66,5 @@ description: Research and maintain evidence-backed global AI ecosystem weekly re
 ## 边界
 
 用户请求一份报告不自动授权定时任务、订阅、外部发布、发送消息或付费推理。无须为一般只读检索、工作区记录及合理写作选择反复询问。优先完成已授权工作；需登录或额外资源的来源标记缺口，用可访问的替代来源补充。
+
+新运行按[采集规范](references/acquisition-workflow.md#来源覆盖审计)记录来源覆盖。导出审计用于查漏，沿用现有九层框架与验收门槛。

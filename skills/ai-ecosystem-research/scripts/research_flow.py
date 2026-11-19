@@ -10,6 +10,7 @@ import sqlite3
 import sys
 import urllib.request
 import urllib.parse
+import discovery_audit
 from datetime import datetime, timezone
 from contextlib import closing
 from pathlib import Path
@@ -94,6 +95,14 @@ class Store:
         ident(d['id'])
         if action == 'begin':
             need(d, ['tool', 'purpose', 'url'])
+            explicitly_scoped = 'coverage_targets' in d
+            targets = d.get('coverage_targets', [])
+            if not isinstance(targets, list) or any(not isinstance(k, str) for k in targets):
+                raise ValueError('coverage_targets must be a list of channel IDs')
+            if targets:
+                plan = discovery_audit.plan_for(self.db)
+                if not plan or not set(targets) <= plan['targets'].keys():
+                    raise ValueError('Unknown coverage target')
             if d.get('parent_id'):
                 self.get('captures', d['parent_id'])
             if d.get('candidate_id'):
@@ -101,7 +110,28 @@ class Store:
             d = {k: d.get(k) for k in ['id', 'tool', 'purpose', 'url', 'query',
                                       'parent_id', 'candidate_id', 'version']}
             d.update(status='started', started_at=now(), finished_at=None)
+            if explicitly_scoped:
+                d['coverage_targets'] = sorted(set(targets))
             self.save('captures', d)
+        elif action == 'coverage-review':
+            capture = self.get('captures', d['id'])
+            need(d, ['target', 'material', 'impact'])
+            if d['target'] not in capture.get('coverage_targets', []) or capture['status'] == 'started':
+                raise ValueError('Review requires a finished capture associated with this target')
+            if d['material'] not in ('original', 'snippet', 'incomplete') or not isinstance(d.get('complete'), bool):
+                raise ValueError('Expected material and boolean complete')
+            if d['material'] == 'original':
+                need(d, ['excerpt'])
+                body = self.db.execute('SELECT content FROM bodies WHERE id=?', (d['id'],)).fetchone()
+                if capture['status'] != 'ok' or not body or d['excerpt'].encode() not in body[0]:
+                    raise ValueError('Excerpt missing from original saved response')
+            if d.get('alternative_for'):
+                other = self.get('captures', d['alternative_for'])
+                if other['id'] == capture['id'] or d['target'] not in other.get('coverage_targets', []):
+                    raise ValueError('Alternative must reference another attempt for this target')
+            capture.setdefault('coverage_reviews', {})[d['target']] = {
+                k: d.get(k) for k in ('material', 'complete', 'window', 'excerpt', 'alternative_for', 'impact')}
+            self.save('captures', capture, update=True)
         elif action == 'finish':
             capture = self.get('captures', d['id'])
             if capture['status'] != 'started':
@@ -220,6 +250,8 @@ class Store:
         return errors
 
     def export(self):
+        if discovery_audit.plan_for(self.db):
+            discovery_audit.save_export(self.run, discovery_audit.audit(self.db, self.run.name))
         for table, filename in EXPORTS.items():
             (self.run / filename).write_text(encode(self.public_rows(table)) + '\n', encoding='utf-8')
         events = [{'sequence': i, 'action': k, 'at': t, 'record': json.loads(p)}
@@ -254,7 +286,11 @@ def initialize(run):
     # Refuse historical or partially initialized runs. Never overwrite old records.
     if any((run / f).exists() for f in ['research.sqlite3', 'report.md', 'prewrite.json', *EXPORTS.values()]):
         raise ValueError('Use a new run directory; existing research records are preserved')
+    plan = discovery_audit.make_plan(run)
     with closing(sqlite3.connect(run / 'research.sqlite3')) as db:
+        db.execute('BEGIN')
+        db.execute('CREATE TABLE coverage_plan(payload TEXT NOT NULL)')
+        db.execute('INSERT INTO coverage_plan VALUES (?)', (encode(plan),))
         for table in EXPORTS:
             db.execute('CREATE TABLE ' + table + '(id TEXT PRIMARY KEY,payload TEXT NOT NULL)')
         db.execute('CREATE TABLE bodies(id TEXT PRIMARY KEY,content BLOB NOT NULL)')
@@ -319,7 +355,7 @@ def check_writing(run):
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('action', choices=['init', 'begin', 'finish', 'fetch', 'candidate',
-                                     'evidence', 'claim', 'withdraw-claim', 'export', 'prewrite', 'check'])
+                                     'evidence', 'claim', 'withdraw-claim', 'export', 'prewrite', 'check', 'coverage-review'])
     p.add_argument('run', type=Path)
     p.add_argument('--input', type=Path, help='UTF-8 JSON record')
     p.add_argument('--content', type=Path, help='Raw response or external tool result saved immediately')

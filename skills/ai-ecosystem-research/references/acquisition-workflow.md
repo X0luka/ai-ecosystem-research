@@ -149,3 +149,19 @@ python <skill>/scripts/check-delivery.py <run>
 检查不能自动识别正文中全部未标记事实，也不能判断语义支持是否成立。语义复核必须逐节检查正文、表格和数字，确认没有绕过登记的新主张。不得因为程序通过而省略这一检查。
 
 旧报告没有新记录时，新交付检查会失败并说明缺少研究数据库。可继续阅读旧报告；不要伪造新记录来让旧报告通过。需要重新正式交付时，以新目录完成可追溯的修订研究。
+
+## 来源覆盖审计
+
+初始化前在 run.json 中明确 window_start、window_end（左闭右开，两端采用相同时间格式）。周报和月报默认采用 coverage-targets.json 的渠道说明。覆盖目标描述检索方向，允许新增语言、地区、技术或来源。专题用 run.json 的 coverage_targets 对象显式声明范围，键为目标 ID，值为检查范围；显式配置替换默认集合。init 将本期计划保存到 SQLite。无起点的专题可以保留未知窗口状态。
+
+begin 或 fetch 请求增加 "coverage_targets":["papers"]，重试使用新的 capture ID 和 parent_id。finish 照常保存响应。检查实际材料后运行 research_flow.py coverage-review <run> --input review.json。例如：
+
+```json
+{"id":"A2","target":"papers","material":"original","excerpt":"原始响应中的逐字片段","window":["2030-01-01","2030-01-08"],"complete":true,"alternative_for":"A1","impact":"已对照替代入口限定区间的完整列表，结论限于这个入口。"}
+```
+
+material 可取 original、snippet 或 incomplete。window 填来源实际覆盖区间，不填抓取日期。替代来源可省略 alternative_for。每个目标分别复核；只读到部分结果、存在分页缺口或混合批次无法对应到具体材料时，complete 填 false。未标目标的请求会使无关联记录的渠道保持未知。相同地址的多次记录不增加覆盖程度。已核实表示有保存的原始材料与研究者的范围声明，不能证明结论正确或全球来源已穷尽。
+
+export 和 prewrite 自动生成 discovery-audit.json。也可独立运行 python <skill>/scripts/discovery_audit.py <run> 重新计算。对本期已有的 research-dashboard.html 加 --dashboard 可刷新同一页面的覆盖审计标签。旧库只读审计，无计划显示未知。审计是诊断结果，不改变交付门槛。
+
+已确认与本次渠道检查无关的请求可显式填写 coverage_targets 为空数组。省略该字段表示尚未分类。
